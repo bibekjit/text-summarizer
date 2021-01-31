@@ -24,9 +24,9 @@ tokens=nltk.word_tokenize(text.lower())
 tokens=[word for word in tokens if word not in punct]
 tokens=[word for word in tokens if word not in stop_words]
 
+# calculating token frequency in 'text' for each tokenised word
 token_freq={}
 
-# calculating token frequency in 'text' for each tokenised word
 for word in tokens:
     if word not in token_freq.keys():
         token_freq[word]=1
@@ -35,7 +35,7 @@ for word in tokens:
 
 # normalizing token frequency
 for word in token_freq.keys():
-    token_freq[word]=token_freq[word]/12
+    token_freq[word]=token_freq[word]/12 # 12 is the max frequency
 
 # tokenising sentences
 tokens_sent=nltk.sent_tokenize(text)
