@@ -59,7 +59,8 @@ def text_type(choice):
     else:
         print("For voice text, do not speak the whole paragraph but only one or two lines.\n"
               "Then wait for the machine to say, 'next sentence'. When finished, say 'done'\n"
-              "when it asks you for the next sentence")
+              "when it asks you for the next sentence\n")
+        input('Press ENTER to start')
         data=[]
         while True:
             r=sr.Recognizer()
@@ -72,6 +73,15 @@ def text_type(choice):
                 your_text=r.recognize_google(audio)
                 print('you said -',your_text)
                 data.append(your_text)
+                if your_text=='done':
+                    data='. '.join(data)
+                    engine=pyttsx3.init('sapi5')
+                    voices=engine.getProperty('voices')
+                    engine.setProperty('voice',voices[0].id)
+                    engine.setProperty('rate',150)
+                    engine.say('summarizing, please wait')
+                    engine.runAndWait()
+                    break
                 engine=pyttsx3.init('sapi5')
                 voices=engine.getProperty('voices')
                 engine.setProperty('voice',voices[0].id)
@@ -79,9 +89,7 @@ def text_type(choice):
                 engine.say('next sentence')
                 engine.runAndWait()
 
-                if your_text=='done':
-                    data='. '.join(data)
-                    break
+                
 
             except:
                 print('sorry, did not get that')
